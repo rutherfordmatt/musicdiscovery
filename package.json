@@ -1,0 +1,29 @@
+{
+  "name": "music-discovery-agent",
+  "version": "1.0.0",
+  "description": "Weekly music discovery agent for electronica, post-rock, and dance music",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0",
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "@tryghost/admin-api": "^1.13.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "music",
+    "discovery",
+    "automation",
+    "bandcamp",
+    "electronic",
+    "post-rock"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
