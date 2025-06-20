@@ -1,0 +1,40 @@
+# .github/workflows/music-discovery.yml
+name: Weekly Music Discovery
+
+on:
+  schedule:
+    # Run every Sunday at 9 AM UTC
+    - cron: '0 9 * * 0'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  discover-music:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run music discovery
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+        GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
+      run: node index.js
+      
+    - name: Commit and push digest
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add digest-*.md
+        git commit -m "Add weekly music digest $(date +%Y-%m-%d)" || exit 0
+        git push
